@@ -8,7 +8,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ElevatorState {
-    private int currfloor;
+    private int currFloor;
     private ElevatorDirection elevatorDirection;
     private ElevatorStatus elevatorStatus;
+
+    public ElevatorState(int currFloor) {
+        this.currFloor = currFloor;
+        this.elevatorDirection = ElevatorDirection.IDLE;
+        this.elevatorStatus = ElevatorStatus.IDLE;
+    }
 }

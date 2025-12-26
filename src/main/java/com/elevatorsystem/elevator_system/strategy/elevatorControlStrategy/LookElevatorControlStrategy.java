@@ -14,7 +14,7 @@ public class LookElevatorControlStrategy implements ElevatorControlStrategy {
     public int getNextFloor(Elevator elevator) {
         ElevatorController elevatorController = elevator.getElevatorController();
         ElevatorState elevatorState = elevatorController.getElevatorState();
-        int currentFloor = elevatorState.getCurrfloor();
+        int currentFloor = elevatorState.getCurrFloor();
         ElevatorDirection direction = elevator.getElevatorDirection();
         NavigableSet<Integer> stops = elevator.getPendingRequests();
 

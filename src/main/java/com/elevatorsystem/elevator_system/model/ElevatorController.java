@@ -16,6 +16,12 @@ public class ElevatorController {
 
     private final NavigableSet<Integer> pendingStops = new TreeSet<>();
 
+    public ElevatorController(ElevatorControlStrategy elevatorControlStrategy,
+                              ElevatorState elevatorState) {
+        this.elevatorControlStrategy = elevatorControlStrategy;
+        this.elevatorState = elevatorState;
+    }
+
     public boolean isAvailableForAssignment(){
         return elevatorState.getElevatorStatus() == ElevatorStatus.IDLE;
     }

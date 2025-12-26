@@ -19,7 +19,7 @@ public class ElevatorSystemApplication {
 		List<Elevator> elevators = elevatorSystem.initialise(12, 4);
 //		elevatorSystem.setElevatorSelectionStrategy(new DirectionAwareElevatorStrategy(elevators));
 
-		elevatorSystem.setElevatorControlStrategy(new FifoElevatorControlStrategy(), elevators.get(0).getId().toString());
+//		elevatorSystem.setElevatorControlStrategy(new FifoElevatorControlStrategy(), elevators.get(0).getId().toString());
 
 	}
 }

@@ -12,8 +12,9 @@ public class Elevator extends BaseModel{
 
     private ElevatorController elevatorController;
 
-    public Elevator(){
-        elevatorController = new ElevatorController();
+    public Elevator(ElevatorController elevatorController) {
+        super(); // initializes BaseModel
+        this.elevatorController = elevatorController;
     }
 
     public boolean isAvailableForAssignment(){
@@ -21,7 +22,7 @@ public class Elevator extends BaseModel{
     }
 
     public int getCurrFloor(){
-        return elevatorController.getElevatorState().getCurrfloor();
+        return elevatorController.getElevatorState().getCurrFloor();
     }
 
     public ElevatorDirection getElevatorDirection(){

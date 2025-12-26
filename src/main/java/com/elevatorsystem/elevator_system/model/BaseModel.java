@@ -12,4 +12,14 @@ public class BaseModel {
     private UUID id;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    protected BaseModel() {
+        this.id = UUID.randomUUID();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
+    }
+
+    protected void markUpdated() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

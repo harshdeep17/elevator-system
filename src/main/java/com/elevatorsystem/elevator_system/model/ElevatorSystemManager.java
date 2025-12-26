@@ -1,11 +1,20 @@
 package com.elevatorsystem.elevator_system.model;
 
+import com.elevatorsystem.elevator_system.strategy.elevatorControlStrategy.ElevatorControlStrategy;
+import com.elevatorsystem.elevator_system.strategy.elevatorControlStrategy.LookElevatorControlStrategy;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ElevatorSystemManager {
-    private ElevatorSystemManager(){ }
     private Map<String,Elevator> elevators;
+
+    private ElevatorSystemManager() {
+        this.elevators = new ConcurrentHashMap<>();
+    }
 
     private static class SingletonHolder {
         private static final ElevatorSystemManager INSTANCE = new ElevatorSystemManager();
@@ -24,17 +33,29 @@ public class ElevatorSystemManager {
         return SingletonHolder.INSTANCE;
     }
 
-    public List<Elevator> initializeElevators(int pNoOfElevators){
+    public synchronized List<Elevator> initializeElevators(int pNoOfElevators){
+        if (!elevators.isEmpty()) {
+            // Already initialized → do nothing
+            return List.copyOf(elevators.values());
+        }
         for(int i = 0; i < pNoOfElevators; i++){
-            Elevator elevator = new Elevator();
-            String elevatorId = elevator.getId().toString();
-            elevators.putIfAbsent(elevatorId, elevator);
+            ElevatorState state = new ElevatorState(0);
+            ElevatorControlStrategy controlStrategy =
+                    new LookElevatorControlStrategy();
+            ElevatorController controller =
+                    new ElevatorController(controlStrategy, state);
+            Elevator elevator = new Elevator(controller);
+            elevators.putIfAbsent(elevator.getId().toString(), elevator);
         }
 
-        return elevators.values().stream().toList();
+        return List.copyOf(elevators.values());
     }
 
     public Elevator getElevator(String elevatorId){
         return elevators.get(elevatorId);
+    }
+
+    public Collection<Elevator> getElevators() {
+        return Collections.unmodifiableCollection(elevators.values());
     }
 }
