@@ -32,4 +32,8 @@ public class Elevator extends BaseModel{
     public NavigableSet<Integer> getPendingRequests(){
         return elevatorController.getPendingStops();
     }
+
+    public void moveToFloor(){
+        elevatorController.moveToFloor(this);
+    }
 }
